@@ -1,17 +1,5 @@
 import time
 
-#### Task 2. Runtime Optimization
-
-# ***!Important!*** If you are running this using PowerShell by clicking on the green play button, you will get an error that `names1.txt` is not found.  To resolve this, run it, get the error, then `cd` into the `names` directory in the `python` terminal that opens in VSCode.
-
-# Navigate into the `names` directory. Here you will find two text files containing 10,000 names each, along with a program `names.py` that compares the two files and prints out duplicate name entries. Try running the code with `python3 names.py`. Be patient because it might take a while: approximately six seconds on my laptop. What is the runtime complexity of this code?
-
-# Six seconds is an eternity so you've been tasked with speeding up the code. Can you get the runtime to under a second? Under one hundredth of a second?
-
-# *You may not use the built in Python list, set, or dictionary in your solution for this problem.  However, you can and should use the provided `duplicates` list to return your solution.*
-
-# (Hint: You might try importing a data structure you built during the week)
-
 start_time = time.time()
 
 f = open('names_1.txt', 'r')
@@ -24,11 +12,46 @@ f.close()
 
 duplicates = []  # Return the list of duplicates in this data structure
 
+def qsort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    smaller = []
+    larger = []
+    for i in range(1, len(arr)):
+        if arr[i] <= pivot:
+            smaller.append(arr[i])
+        else:
+            larger.append(arr[i])
+    return qsort(smaller) + [pivot] + qsort(larger)
+
+names_2 = qsort(names_2)
+
+
+
+def binarysrch(arr, target):
+    
+  low = 0
+  high = len(arr)-1
+
+  while low < high:
+    mid = (low + high) // 2
+    if arr[mid] == target:
+      return target
+    elif target < arr[mid]:
+      high = mid
+    else:
+      low = mid+1
+
+for name in names_1:
+    if name == binarysrch(names_2, name):
+        duplicates.append(name)
+
 # Replace the nested for loops below with your improvements
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+# for name_1 in names_1:
+#     for name_2 in names_2:
+#         if name_1 == name_2:
+#             duplicates.append(name_1)
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
