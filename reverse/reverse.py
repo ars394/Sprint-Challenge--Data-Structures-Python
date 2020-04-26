@@ -1,3 +1,18 @@
+#### Task 3. Reverse a Linked List Recursively
+
+# Inside of the `reverse` directory, you'll find a basic implementation of a Singly Linked List. _Without_ making it a Doubly Linked List (adding a tail attribute), complete the `reverse_list()` function within `reverse/reverse.py` reverse the contents of the list using recursion, *not a loop.*
+
+# For example,
+# ```
+# 1->2->3->None
+# ```
+# would become...
+# ```
+# 3->2->1->None
+# ```
+
+# While credit will be given for a functional solution, only optimal solutions will earn a ***3*** on this task.
+
 class Node:
     def __init__(self, value=None, next_node=None):
         # the value at this linked list node
@@ -47,4 +62,12 @@ class LinkedList:
 
     def reverse_list(self, node, prev):
         # You must use recursion for this solution
-        pass
+        head_node = Node('start_head')
+        current = self.head
+        while current is not None:
+            new_nxt = head_node.get_next()
+            old_nxt = current.get_next()
+            current.set_next(new_nxt)
+            head_node.set_next(current)
+            current = old_nxt
+        self.head = head_node.get_next()
